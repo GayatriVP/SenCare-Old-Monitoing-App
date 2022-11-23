@@ -29,9 +29,27 @@ class Body extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListView.builder(
-                    itemCount: 4,
-                    itemBuilder: ((context, index) => VideoFeed()),
+                  Container(
+                    child: ListView(
+                      children: [
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                VideoFeed(),
+                                VideoFeed(),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                VideoFeed(),
+                                VideoFeed(),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

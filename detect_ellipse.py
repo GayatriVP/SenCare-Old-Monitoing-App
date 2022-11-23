@@ -112,7 +112,7 @@ def plot_boxes(results, frame):
                     # cv2.imshow("ellipse",imell)
         return frame
 
-url = "videos/fall-07.mp4"
+url = "videos/fall-01.mp4"
 vs = cv2.VideoCapture(url)
 
 while True:

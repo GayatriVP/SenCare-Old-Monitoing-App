@@ -36,14 +36,14 @@ class Body extends StatelessWidget {
                           children: [
                             Column(
                               children: [
-                                VideoFeed(),
-                                VideoFeed(),
+                                VideoFeed(url: 'videos/fall-01.mp4',),
+                                VideoFeed(url: 'videos/fall-04.mp4'),
                               ],
                             ),
                             Column(
                               children: [
-                                VideoFeed(),
-                                VideoFeed(),
+                                VideoFeed(url: 'videos/fall-05.mp4'),
+                                VideoFeed(url: 'videos/fall-06.mp4'),
                               ],
                             ),
                           ],

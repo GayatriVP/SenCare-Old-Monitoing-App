@@ -4,29 +4,33 @@ import 'package:video_player/video_player.dart';
 // import 'package:flutter_video_player_demo/video_items.dart';
 
 class VideoFeed extends StatefulWidget {
-  const VideoFeed({
-    Key? key,
-  }) : super(key: key);
+  final url;
+
+  const VideoFeed({Key? key, this.url}) : super(key: key);
 
   @override
-  _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
+  _VideoPlayerScreenState createState() => _VideoPlayerScreenState(this.url);
 }
 
 class _VideoPlayerScreenState extends State<VideoFeed> {
+  late final _url;
+
+  _VideoPlayerScreenState(this._url);
+
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     _controller = VideoPlayerController.asset(
-      'videos/fall-01.mp4',
+      this._url,
     );
 
     _initializeVideoPlayerFuture = _controller.initialize();
 
     super.initState();
 //     _controller.initialize().then((value) {
-//     _controller.play();
+    // _controller.play();
 //     _controller.setLooping(true);
 // });
   }
@@ -47,7 +51,7 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
       ),
       // color: Colors.blueAccent,
       height: 300,
-      width: 580,
+      width: 600,
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
@@ -66,35 +70,42 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
           ),
           Positioned(
               child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultpadding),
-              height: 180,
-              width: 560,
-              // child: VideoItems,
-              // child: Image.asset("images/img1.jpg"),
-              child: FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    // If the VideoPlayerController has finished initialization, use
-                    // the data it provides to limit the aspect ratio of the video.
-                    _controller.play();
-                    _controller.setLooping(true);
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      // Use the VideoPlayer widget to display the video.
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    // If the VideoPlayerController is still initializing, show a
-                    // loading spinner.
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
-              ),
-            )
-          )
+            padding: const EdgeInsets.symmetric(horizontal: kDefaultpadding),
+            height: 180,
+            width: 560,
+            child: FutureBuilder(
+              future: _initializeVideoPlayerFuture,
+              builder: (context, snapshot) {
+                // if (snapshot.connectionState == ConnectionState.done) {
+                //   _controller.play();
+                //   return AspectRatio(
+                //     aspectRatio: _controller.value.aspectRatio,
+                //     child: VideoPlayer(_controller),
+                //   );
+                // } else {
+                //   return Center(child: CircularProgressIndicator());
+                // }
+
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If the VideoPlayerController has finished initialization, use
+                  // the data it provides to limit the aspect ratio of the video.
+                  _controller.play();
+                  _controller.setLooping(true);
+                  return AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    // Use the VideoPlayer widget to display the video.
+                    child: VideoPlayer(_controller),
+                  );
+                } else {
+                  // If the VideoPlayerController is still initializing, show a
+                  // loading spinner.
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+          ))
         ],
       ),
     );

@@ -19,10 +19,7 @@ class TitleWithMore extends StatelessWidget {
         children: [
           CustomTitle(text: title),
           Spacer(),
-          FlatButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            color: Colors.white,
+          ElevatedButton(
             child: Text(
               "More",
               style: TextStyle(color: kPrimarycolor, fontSize: 20.0),

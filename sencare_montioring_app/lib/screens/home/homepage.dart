@@ -30,16 +30,21 @@ AppBar navBar() {
     actions: <Widget>[
       IconButton(
         icon: SvgPicture.asset(
-          "icons/notification.svg",
+          "assets/icons/notification.svg",
           color: Colors.white,
         ),
         onPressed: () {},
       )
     ],
     leading: IconButton(
-          icon: SvgPicture.asset("icons/menu.svg", color: Colors.white,height: 30.0,width: 30.0,),
-          tooltip: 'Menu Icon',
-          onPressed: () {},
-        ),
+      icon: SvgPicture.asset(
+        "assets/icons/menu.svg",
+        color: Colors.white,
+        height: 30.0,
+        width: 30.0,
+      ),
+      tooltip: 'Menu Icon',
+      onPressed: () {},
+    ),
   );
 }

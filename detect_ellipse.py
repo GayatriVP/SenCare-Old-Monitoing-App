@@ -91,49 +91,24 @@ def plot_boxes(results, frame):
                         if A<75 or A>100:
                                 count+=1
                     
-                #     print(extTop[1],extTop[0])
-                #     P1 = extTop[0] - 0
-                #     P2 = extTop[1] - cY
-                #     Q1 = cX - 0
-                #     Q2 = cY - cY
-                # #     angle = math.acos((extTop[0]-extTop[1])(cY)/(abs(extTop[1]-extTop[0])*abs(cY-0)))
-
-                #     A = math.acos( (P1*Q1 + P2*Q2) / ( math.sqrt(P1*P1+P2*P2) * math.sqrt(Q1*Q1+Q2*Q2) ) );
-                #     A = A*180/3.14;
-
-                #     print(A)
-                    
-                #     cv2.drawContours(image=im2, contours=contours, contourIdx=-1, color=(0, 0, 255), thickness=2, lineType=cv2.LINE_AA)
-                    # cv2.imshow('thresh', thresh)
-                #     cv2.imshow('fgmask', fgMask)
                     cv2.imshow('frame', im2)
                     
-                    # imell = cv2.ellipse(frame, center, (width,height),0, 0, 360, (0, 0, 255), 5)
-                    # cv2.imshow("ellipse",imell)
         return frame
 
-url = "videos/fall-01.mp4"
-vs = cv2.VideoCapture(url)
+def predict(url): 
+    url = "videos/fall-01.mp4"
+    vs = cv2.VideoCapture(url)
 
-while True:
+    while True:
 
-    ret, frame = vs.read()
-    # assert ret
-            
-#     frame = imutils.resize(frame, width=720, height=720)
-
-    # segmentor = SelfiSegmentation()
-    # imgOut = segmentor.removeBG(frame, (255,0,255), threshold=0.55)
-    # cv2.imshow('new',imgOut)
-    
-    results = score_frame(frame)
-    frame = plot_boxes(results, frame)
-    if count > 5:
-        print("Fall Detected")
-    
-            
-    # cv2.imshow('YOLOv5 Detection', frame)
-    if cv2.waitKey(5) & 0xFF == 27:
-        break
-      
-vs.release()
+        ret, frame = vs.read()
+        
+        results = score_frame(frame)
+        frame = plot_boxes(results, frame)
+        if count > 5:
+            print("Fall Detected")
+            break;
+        if cv2.waitKey(5) & 0xFF == 27:
+            break
+        
+    vs.release()

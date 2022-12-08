@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sencare_montioring_app/constants.dart';
 import 'package:video_player/video_player.dart';
+import 'package:video_player_web/video_player_web.dart';
 // import 'package:flutter_video_player_demo/video_items.dart';
 
 class VideoFeed extends StatefulWidget {
@@ -22,17 +23,14 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset(
-      this._url,
-    );
-
-    _initializeVideoPlayerFuture = _controller.initialize();
-
     super.initState();
+
+    _controller = VideoPlayerController.asset(this._url);
 //     _controller.initialize().then((value) {
-    // _controller.play();
+//     _controller.play();
 //     _controller.setLooping(true);
 // });
+    _initializeVideoPlayerFuture = _controller.initialize();
   }
 
   @override
@@ -70,42 +68,54 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
           ),
           Positioned(
               child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: kDefaultpadding),
-            height: 180,
-            width: 560,
-            child: FutureBuilder(
-              future: _initializeVideoPlayerFuture,
-              builder: (context, snapshot) {
-                // if (snapshot.connectionState == ConnectionState.done) {
-                //   _controller.play();
-                //   return AspectRatio(
-                //     aspectRatio: _controller.value.aspectRatio,
-                //     child: VideoPlayer(_controller),
-                //   );
-                // } else {
-                //   return Center(child: CircularProgressIndicator());
-                // }
-
-                if (snapshot.connectionState == ConnectionState.done) {
-                  // If the VideoPlayerController has finished initialization, use
-                  // the data it provides to limit the aspect ratio of the video.
-                  _controller.play();
-                  _controller.setLooping(true);
-                  return AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    // Use the VideoPlayer widget to display the video.
-                    child: VideoPlayer(_controller),
-                  );
-                } else {
-                  // If the VideoPlayerController is still initializing, show a
-                  // loading spinner.
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              },
-            ),
-          ))
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultpadding),
+                  height: 200,
+                  width: 460,
+                  child: FutureBuilder(
+                    future: _initializeVideoPlayerFuture,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        // If the VideoPlayerController has finished initialization, use
+                        // the data it provides to limit the aspect ratio of the video.
+                        _controller.play();
+                        return AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          // Use the VideoPlayer widget to display the video.
+                          child: VideoPlayer(_controller),
+                        );
+                      } else {
+                        // If the VideoPlayerController is still initializing, show a
+                        // loading spinner.
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  )
+                  // child: FutureBuilder(
+                  //   future: _initializeVideoPlayerFuture,
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.done) {
+                  //       // If the VideoPlayerController has finished initialization, use
+                  //       // the data it provides to limit the aspect ratio of the video.
+                  //       _controller.play();
+                  //       _controller.setLooping(true);
+                  //       return AspectRatio(
+                  //         aspectRatio: _controller.value.aspectRatio,
+                  //         // Use the VideoPlayer widget to display the video.
+                  //         child: VideoPlayer(_controller),
+                  //       );
+                  //     } else {
+                  //       // If the VideoPlayerController is still initializing, show a
+                  //       // loading spinner.
+                  //       return const Center(
+                  //         child: CircularProgressIndicator(),
+                  //       );
+                  //     }
+                  //   },
+                  // ),
+                  ))
         ],
       ),
     );

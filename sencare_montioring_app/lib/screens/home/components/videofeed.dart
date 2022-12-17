@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:sencare_montioring_app/constants.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_player_web/video_player_web.dart';
+import 'package:sencare_montioring_app/screens/home/components/api.dart';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
 // import 'package:flutter_video_player_demo/video_items.dart';
 
 class VideoFeed extends StatefulWidget {
@@ -20,10 +28,15 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
 
   late VideoPlayerController _controller;
   late Future<void> _initializeVideoPlayerFuture;
+  late Future<String> _calculation;
 
   @override
   void initState() {
     super.initState();
+    _calculation = Future<String>.delayed(
+      const Duration(seconds: 120),
+      () => AppData().Getdata('http://192.168.0.169:5000/'),
+    );
 
     _controller = VideoPlayerController.asset(this._url);
 //     _controller.initialize().then((value) {
@@ -53,6 +66,23 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: <Widget>[
+          Visibility(
+              visible: true,
+              child: FutureBuilder<String>(
+                  future:
+                      _calculation, // a previously-obtained Future<String> or null
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (!snapshot.hasData)
+                      return Container(); // This container can be a loading screen, since its waiting for data.
+                    if (snapshot.data!.isNotEmpty) {
+                      print('detected');
+                      return Text("Alert");
+                    } else {
+                      print("List Null");
+                      return Text("");
+                    }
+                  })),
           Container(
             height: 200,
             decoration: BoxDecoration(
@@ -68,54 +98,75 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
           ),
           Positioned(
               child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: kDefaultpadding),
-                  height: 200,
-                  width: 460,
-                  child: FutureBuilder(
-                    future: _initializeVideoPlayerFuture,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        // If the VideoPlayerController has finished initialization, use
-                        // the data it provides to limit the aspect ratio of the video.
-                        _controller.play();
-                        return AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          // Use the VideoPlayer widget to display the video.
-                          child: VideoPlayer(_controller),
-                        );
-                      } else {
-                        // If the VideoPlayerController is still initializing, show a
-                        // loading spinner.
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                    },
-                  )
-                  // child: FutureBuilder(
-                  //   future: _initializeVideoPlayerFuture,
-                  //   builder: (context, snapshot) {
-                  //     if (snapshot.connectionState == ConnectionState.done) {
-                  //       // If the VideoPlayerController has finished initialization, use
-                  //       // the data it provides to limit the aspect ratio of the video.
-                  //       _controller.play();
-                  //       _controller.setLooping(true);
-                  //       return AspectRatio(
-                  //         aspectRatio: _controller.value.aspectRatio,
-                  //         // Use the VideoPlayer widget to display the video.
-                  //         child: VideoPlayer(_controller),
-                  //       );
-                  //     } else {
-                  //       // If the VideoPlayerController is still initializing, show a
-                  //       // loading spinner.
-                  //       return const Center(
-                  //         child: CircularProgressIndicator(),
-                  //       );
-                  //     }
-                  //   },
-                  // ),
-                  ))
+            padding: const EdgeInsets.symmetric(horizontal: kDefaultpadding),
+            height: 200,
+            width: 460,
+            child: FutureBuilder<dynamic>(
+              future: _initializeVideoPlayerFuture,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  // If the VideoPlayerController has finished initialization, use
+                  // the data it provides to limit the aspect ratio of the video.
+                  _controller.play();
+                  _controller.setLooping(true);
+
+                  return AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    // Use the VideoPlayer widget to display the video.
+                    child: VideoPlayer(_controller),
+                  );
+                } else {
+                  // If the VideoPlayerController is still initializing, show a
+                  // loading spinner.
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+
+            // child: FutureBuilder(
+            //   future: _initializeVideoPlayerFuture,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.done) {
+            //       // If the VideoPlayerController has finished initialization, use
+            //       // the data it provides to limit the aspect ratio of the video.
+            //       _controller.play();
+            //       _controller.setLooping(true);
+            //       return AspectRatio(
+            //         aspectRatio: _controller.value.aspectRatio,
+            //         // Use the VideoPlayer widget to display the video.
+            //         child: VideoPlayer(_controller),
+            //       );
+            //     } else {
+            //       // If the VideoPlayerController is still initializing, show a
+            //       // loading spinner.
+            //       return const Center(
+            //         child: CircularProgressIndicator(),
+            //       );
+            //     }
+            //   },
+            // ),
+          )),
+          Visibility(
+            visible: false,
+            child: FloatingActionButton(
+              onPressed: () {
+                setState(() {
+                  //pause
+                  if (_controller.value.isPlaying) {
+                    _controller.pause();
+                  } else {
+                    // play
+                    _controller.play();
+                  }
+                });
+              },
+              child: Icon(
+                _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -168,22 +219,22 @@ class _VideoPlayerScreenState extends State<VideoFeed> {
 //             }
 //           },
 //         ),
-//         FloatingActionButton(
-//           onPressed: () {
-//             setState(() {
-//               //pause
-//               if (_controller.value.isPlaying) {
-//                 _controller.pause();
-//               } else {
-//                 // play
-//                 _controller.play();
-//               }
-//             });
-//           },
-//           child: Icon(
-//             _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-//           ),
-//         )
+        // FloatingActionButton(
+        //   onPressed: () {
+        //     setState(() {
+        //       //pause
+        //       if (_controller.value.isPlaying) {
+        //         _controller.pause();
+        //       } else {
+        //         // play
+        //         _controller.play();
+        //       }
+        //     });
+        //   },
+        //   child: Icon(
+        //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+        //   ),
+        // )
 //       ],
 //     );
 //   }

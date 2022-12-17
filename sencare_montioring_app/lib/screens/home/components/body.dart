@@ -49,19 +49,7 @@ class Body extends StatelessWidget {
                               children: <Widget>[
                                 VideoFeed(url: 'videos/fall-01.mp4'),
                                 VideoFeed(url: 'videos/fall-04.mp4'),
-                                FutureBuilder<dynamic>(
-                                    future: AppData().Getdata(
-                                        'http://127.0.0.1:5000/predict?Query=Flask_App/videos/fall-04.mp4'),
-                                    builder: (context, snapshot) {
-                                      if (!snapshot.hasData)
-                                        return Container(); // This container can be a loading screen, since its waiting for data.
-                                      if (snapshot.data.isNotEmpty) {
-                                        return Text("Alert");
-                                      } else {
-                                        print("List Null");
-                                        return Text("");
-                                      }
-                                    })
+                                
                                 // Extra(new File('videos/fall-01.mp4'))
                                 //     .uploadImageToServer(),
                               ],
@@ -72,6 +60,7 @@ class Body extends StatelessWidget {
                                 VideoFeed(url: 'videos/fall-06.mp4'),
                               ],
                             ),
+                            
                           ],
                         ),
                       ],

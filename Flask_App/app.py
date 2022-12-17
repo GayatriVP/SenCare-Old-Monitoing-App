@@ -5,8 +5,10 @@ from detect_ellipse import predict
 app = Flask(__name__)
 @app.route('/')
 def hello():
-    print("hello world")
-    return 'hello world'
+    d={}
+    ret='hello'
+    d['return'] = ret
+    return jsonify(d)
 
 @app.route('/predict', methods=['GET'])
 def detect():
@@ -31,4 +33,4 @@ def detect():
 
 if __name__ == '__main__':
     
-	app.run()
+	app.run(debug=False, host='192.168.0.169', port=5000)

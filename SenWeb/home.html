@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage- SenCare</title>
+
+    <!-- css links -->
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/videofeed.css">
+</head>
+<body>
+    <header class="header">
+        <div class="navbar" id="navbar">
+            <div class="logo" id="logo">
+                <!-- Logo -->
+                <img src="./media/images/SenCare-removebg.png" alt="SenCare">
+            </div>
+            <ul class="items">
+                <li><a class="active" href="">Dashboard</a></li>
+                <li><a href="">List of Clients</a></li>
+                <div class="clients">
+                    <!-- <ul class="cli-list">
+                        <li><a href="">C1</a></li>
+                        <li><a href="">C2</a></li>
+                        <li><a href="">C3</a></li>
+                        <li><a href="">C4</a></li>
+                        <li><a href="">C5</a></li>
+                    </ul> -->
+                </div>
+                <li><a href="">Profile</a></li>
+                <li><a href="">Alerts</a></li>
+                <li>
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <div class="bars" onclick="iconbar(this)">
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+    </header>
+
+    <section class="videofeed">
+        <h1>Monitors</h1>
+        <div class="grid-container">
+            <div class="flex-left feed" id="f1">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="./media/videos/fall-01.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Aryaan</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-right feed" id="f2">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="./media/videos/fall-04.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Kiran</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-left feed" id="f3">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="./media/videos/fall-06.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Jethalal</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-right feed" id="f4">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="./media/videos/fall-01.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Atul</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-left feed" id="f5">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="./media/videos/fall-06.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Himesh</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="scripts/nav.js"></script>
+</body>
+</html>

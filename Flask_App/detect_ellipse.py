@@ -96,12 +96,11 @@ def plot_boxes(results, frame):
                         if A<75 or A>100:
                                 count+=1
                     
-                    cv2.imshow('frame', im2)
-                    
+                    cv2.imshow('frame', im2)       
         return frame
 
 def predict(url): 
-    url1 = "Flask_App/videos/fall-01.mp4"
+    # url1 = "Flask_App/videos/fall-01.mp4"
     # print("in predict")
     vs = cv2.VideoCapture(url)
     # print("capture")
@@ -110,7 +109,7 @@ def predict(url):
         # print("in while")
 
         ret, frame = vs.read()
-        cv2.imshow('yes',frame)
+        # cv2.imshow('yes',frame)
         # print("frame read")
         
         results = score_frame(frame)
@@ -118,7 +117,9 @@ def predict(url):
         frame = plot_boxes(results, frame)
         if count > 5:
             print("Fall Detected")
-            return "detected";
+            ret = "detected"
+            vs.release()
+            return ret
         if cv2.waitKey(5) & 0xFF == 27:
             break
         

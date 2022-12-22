@@ -1,0 +1,17 @@
+@import 'https://fonts.googleapis.com/css?family=Montserrat';
+* {
+  font-family: Montserrat;
+}
+
+html {
+  color: #222;
+  font-size: 1em;
+  line-height: 1.5;
+  box-sizing: border-box
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+}

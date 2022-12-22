@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage- SenCare</title>
+
+    <!-- css links -->
+    <link rel="stylesheet" href="../static/css/home.css">
+    <link rel="stylesheet" href="../static/css/nav.css">
+    <link rel="stylesheet" href="../static/css/videofeed.css">
+</head>
+<body>
+    <header class="header">
+        <div class="navbar" id="navbar">
+            <div class="logo" id="logo">
+                <!-- Logo -->
+                <img src="../static/media/images/SenCare-removebg.png" alt="SenCare">
+            </div>
+            <ul class="items">
+                <li><a class="active" href="">Dashboard</a></li>
+                <li><a href="">List of Clients</a></li>
+                <div class="clients">
+                    <!-- <ul class="cli-list">
+                        <li><a href="">C1</a></li>
+                        <li><a href="">C2</a></li>
+                        <li><a href="">C3</a></li>
+                        <li><a href="">C4</a></li>
+                        <li><a href="">C5</a></li>
+                    </ul> -->
+                </div>
+                <li><a href="">Profile</a></li>
+                <li><a href="">Alerts</a></li>
+                <li>
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <div class="bars" onclick="iconbar(this)">
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+    </header>
+
+    <section class="videofeed">
+        <h1>Monitors</h1>
+        <div class="grid-container">
+            <div class="flex-left feed" id="f1">
+                <div class="vid">
+                    <!-- <script> document.myForm.submit()</script> -->
+                    <video autoplay loop muted>
+                        <source src="../static/media/videos/fall-01.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- <form name="myForm1" id="myForm1" method="GET" action="http://127.0.0.1:5000/predict">
+                    <input type="hidden" name="Query" value="static/media/videos/fall-01.mp4" />
+                </form> -->
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Aryaan</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-right feed" id="f2">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="../static/media/videos/fall-04.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- <form name="myForm4" id="myForm4" method="GET" action="http://127.0.0.1:5000/predict">
+                    <input type="hidden" name="Query" value="static/media/videos/fall-04.mp4" />
+                </form> -->
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Kiran</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-left feed" id="f3">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="../static/media/videos/fall-06.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <!-- <form name="myForm6" id="myForm6" method="GET" action="http://127.0.0.1:5000/predict">
+                    <input type="hidden" name="Query" value="static/media/videos/fall-06.mp4" />
+                </form> -->
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Jethalal</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="flex-right feed" id="f4">
+                <div class="vid">
+                    <video autoplay loop muted>
+                        <source src="../static/media/videos/fall-05.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="desc">
+                    <div class="row">
+                        <h3>Name:</h3>
+                        <p>Atul</p>
+                    <!-- </div>
+                    <div class="row" style="padding-top: 20px;"> -->
+                        <p>Cam 1</p>
+                        <!-- <div class="btn">more</div> -->
+                    </div>
+                </div>
+            </div>
+            <form name="myForm" id="myForm" method="GET" action="http://127.0.0.1:5000/predict">
+                <input type="hidden" name="Query1" value="static/media/videos/fall-05.mp4" />
+                <input type="hidden" name="Query2" value="static/media/videos/fall-01.mp4" />
+            </form>
+        </div>
+        <script> 
+        document.getElementById("myForm").submit();
+        // document.getElementById("myForm2").submit();
+        </script>
+    </section>
+    <!-- <script type="text/javascript">
+        document.getElementById("myForm").submit();
+        // window.onload=function(){
+        //     // var auto_refresh = setInterval(function() { document.getElementById("myForm").submit(); }, 100000);
+        //     document.getElementById("myForm").submit();
+        // }
+    </script> -->
+
+    <script src="../static/scripts/nav.js"></script>
+</body>
+</html>

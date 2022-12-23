@@ -1,2 +1,51 @@
 {{ res1 }}
 {{ res2 }}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<audio id="xyz" src="../static/media/mixkit-vintage-warning-alarm-990.wav" preload="auto"></audio>
+<audio id="xyz2" src="../static/media/mixkit-vintage-warning-alarm-990.wav" preload="auto"></audio>
+
+<script>
+    var sound1 = new Audio('../static/media/mixkit-vintage-warning-alarm-990.wav')
+    var sound2 = new Audio('../static/media/mixkit-vintage-warning-alarm-990.wav')
+	
+    res1 = '{{ res1 }}'
+    res2 = '{{ res2 }}'
+    if (res2 == 'detected2' && res1=='detected') 
+    {
+        sound1.play();
+        alert("Fall detected in frame 2");
+        window.location.href = "http://127.0.0.1:5000/home?flag2=display&flag1=display";
+    }  
+    else if (res1 == 'detected')
+    {
+        sound2.play();
+        alert("Fall detected in frame 1");
+        // demo();
+        setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/home?flag1=display"; }, 17000);
+        // window.location.href = "http://127.0.0.1:5000/home?flag1=display";
+    }
+    else if (res2 == 'detected2') 
+    {
+        sound2.play();
+        alert("Fall detected in frame 2");
+        window.location.href = "http://127.0.0.1:5000/home?flag2=display";
+    } 
+    else{
+
+    }   
+    
+
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function demo() {
+        await sleep(10000);
+}
+
+
+</script>
+</body>
+</html>

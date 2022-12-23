@@ -115,10 +115,10 @@ def plot_boxes(results, frame):
 
 
 # @jit(target_backend='cuda')
-def predict():
-    url1 = "Flask_App/videos/fall-01.mp4"
+def predict(url):
+    # url1 = "Flask_App/videos/fall-01.mp4"
     # print("in predict")
-    vs = cv2.VideoCapture(url1)
+    vs = cv2.VideoCapture(url)
     # print("capture")
 
     while vs.isOpened():
@@ -142,4 +142,4 @@ def predict():
     vs.release()
 
 
-predict()
+# predict()

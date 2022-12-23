@@ -1,22 +1,29 @@
-from flask import Flask, render_template,redirect, url_for
+from flask import Flask, render_template, redirect, url_for
 import os
-from flask import Flask,request,jsonify
-from detect_ellipse import predict 
+from flask import Flask, request, jsonify
+from detect_ellipse import predict
 from threading import Thread
 
 import multiprocessing
 pool = multiprocessing.Pool()
-  
-    # pool object with number of element
+
+# pool object with number of element
 pool = multiprocessing.Pool(processes=2)
-res2="not detected"
-res1="not detected"
+res2 = "not detected"
+res1 = "not detected"
+fl = 'no'
 app = Flask(__name__)
 # app.app_context().push()
 
-@app.route('/')
+
+@app.route('/home', methods=['GET'])
 def index():
-    return render_template('home.html')
+    global res1
+    global res2
+    args = request.args
+    flag1 = str(args.get("flag1", default="None", type=str))
+    flag2 = str(args.get("flag2", default="None", type=str))
+    return render_template('home.html', res1=res1, res2=res2, flag1=flag1, flag2=flag2)
 
 # @app.route('/')
 # def hello():
@@ -25,20 +32,33 @@ def index():
 #     d['return'] = ret
 #     return jsonify(d)
 
+
 @app.route('/predict', methods=['GET'])
 def detect():
     global res1
+    global fl
     # input list
     print("inside")
     # ret1=''
     # ret2=''
+    # fl = 'no'
+
     url1 = str(request.args['Query1'])
     url2 = str(request.args['Query2'])
-    t1 = Thread(target=decide, name='t1', args=(url2,))
-    t1.start()
-    ret1 = pool.apply_async(predict, args=(url1,))
-    # ret2 = pool.apply_async(predict, args=(url2,))
-    res1 = ret1.get()
+    if(url2):
+        t1 = Thread(target=decide, name='t1', args=(url2,))
+        t1.start()
+
+    if (url1):
+        ret1 = pool.apply_async(predict, args=(url1,))
+        # ret2 = pool.apply_async(predict, args=(url2,))
+        res1 = ret1.get()
+
+    # t1.join()
+    # print("thread ", fl, "\n")
+    # if fl == 'yes':
+    #     print("in yes")
+    #     z = redirect(url_for('ren', _external=True, res2=res2))
     # url = "http://127.0.0.1:5000/decide?arg="+res1
 
     # z = redirect(url_for('.ren',messages=res1))
@@ -56,7 +76,7 @@ def detect():
     # ret=[res1,res2]
     # ret = predict(url1)
     # d['return'] = ret
-    return redirect(url_for('ren',_external=True,res1=res1))
+    return render_template('return.html', res1=res1, res2=res2)
     # return render_template('return.html', detect=res1)
     # if request.method == 'POST':
     # # check if the post request has the file part
@@ -71,22 +91,27 @@ def detect():
     #     user_file.save(path)
 
 # @app.route('/decide', methods=['GET'])
+
+
 def decide(url2):
     with app.app_context(), app.test_request_context():
         print("inside2")
         global res2
-            # url2 = str(request.args['Query2'])
+        # url2 = str(request.args['Query2'])
         ret2 = pool.apply_async(predict, args=(url2,))
         if ret2:
             res2 = ret2.get()+"2"
-            print("ret2 found",res2)
+            print("ret2 found", res2)
         # url = "http://127.0.0.1:5000/decide?arg="+res2
 
         # redirect(url)
-        z=redirect(url_for('ren',_external=True,res2=res2))
-        return redirect(url_for('ren',_external=True,res2=res2))
+        redirect(url_for('ren', _external=True, res2=res2))
+        fl = 'yes'
+        # print("decide ", fl, "\n")
+        return fl
 
-@app.route('/decide')  
+
+@app.route('/decide')
 def ren():
     global res2, res1
     if res1 == "detected" or res2 == "detected2":
@@ -98,6 +123,7 @@ def ren():
         res1 = str(request.args['res1'])
         return render_template('return.html', res1=res1, res2=res2)
 
+
 if __name__ == '__main__':
-    
-	app.run(debug=True)
+
+    app.run(debug=True)

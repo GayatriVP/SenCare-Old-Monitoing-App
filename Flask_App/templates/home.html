@@ -52,9 +52,10 @@
             <div class="flex-left feed" id="f1">
                 <div class="vid">
                     <!-- <script> document.myForm.submit()</script> -->
-                    <video autoplay loop muted>
-                        <source src="../static/media/videos/fall-01.mp4" type="video/mp4">
+                    <video autoplay loop muted id="vid1">
+                        <source src="../static/media/videos/fall-05.mp4" type="video/mp4">
                     </video>
+                    <script>document.getElementById("vid1").playbackRate = 0.15;</script>
                 </div>
                 <!-- <form name="myForm1" id="myForm1" method="GET" action="http://127.0.0.1:5000/predict">
                     <input type="hidden" name="Query" value="static/media/videos/fall-01.mp4" />
@@ -72,9 +73,10 @@
             </div>
             <div class="flex-right feed" id="f2">
                 <div class="vid">
-                    <video autoplay loop muted>
-                        <source src="../static/media/videos/fall-04.mp4" type="video/mp4">
+                    <video autoplay loop muted id="vid2">
+                        <source src="../static/media/videos/fall-01.mp4" type="video/mp4">
                     </video>
+                    <script>document.getElementById("vid2").playbackRate = 0.15;</script>
                 </div>
                 <!-- <form name="myForm4" id="myForm4" method="GET" action="http://127.0.0.1:5000/predict">
                     <input type="hidden" name="Query" value="static/media/videos/fall-04.mp4" />
@@ -90,50 +92,40 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-left feed" id="f3">
-                <div class="vid">
-                    <video autoplay loop muted>
-                        <source src="../static/media/videos/fall-06.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <!-- <form name="myForm6" id="myForm6" method="GET" action="http://127.0.0.1:5000/predict">
-                    <input type="hidden" name="Query" value="static/media/videos/fall-06.mp4" />
-                </form> -->
-                <div class="desc">
-                    <div class="row">
-                        <h3>Name:</h3>
-                        <p>Jethalal</p>
-                    <!-- </div>
-                    <div class="row" style="padding-top: 20px;"> -->
-                        <p>Cam 1</p>
-                        <!-- <div class="btn">more</div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="flex-right feed" id="f4">
-                <div class="vid">
-                    <video autoplay loop muted>
-                        <source src="../static/media/videos/fall-05.mp4" type="video/mp4">
-                    </video>
-                </div>
-                <div class="desc">
-                    <div class="row">
-                        <h3>Name:</h3>
-                        <p>Atul</p>
-                    <!-- </div>
-                    <div class="row" style="padding-top: 20px;"> -->
-                        <p>Cam 1</p>
-                        <!-- <div class="btn">more</div> -->
-                    </div>
-                </div>
-            </div>
             <form name="myForm" id="myForm" method="GET" action="http://127.0.0.1:5000/predict">
-                <input type="hidden" name="Query1" value="static/media/videos/fall-05.mp4" />
-                <input type="hidden" name="Query2" value="static/media/videos/fall-01.mp4" />
+                <input type="hidden" name="Query1" id="Query1"/>
+                <input type="hidden" name="Query2" id="Query2"/>
             </form>
         </div>
         <script> 
-        document.getElementById("myForm").submit();
+        
+        res1 = '{{ res1 }}'
+        res2 = '{{ res2 }}'
+        flag1 = '{{ flag1 }}'
+        flag2 = '{{ flag2 }}'
+        setTimeout(() => { if(res1 == 'detected' && flag1 =='display'){}
+        else if (res1 == 'detected' && flag1=='None')
+        {
+            setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/decide"; }, 5000);
+            
+        }
+        else{
+            document.getElementById("Query1").value="static/media/videos/fall-05.mp4";
+             document.getElementById("myForm").submit(); 
+        }}, 5000);
+
+        setTimeout(() => {if(res2 == 'detected2' && flag2 =='display'){}
+        else if (res2 == 'detected2' && flag2=='None')
+        {
+            setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/decide"; }, 5000);
+            
+        }
+        else{
+            console.log("not yet detetcted 2")
+            document.getElementById("Query2").value="static/media/videos/fall-01.mp4";
+            
+             document.getElementById("myForm").submit(); 
+        }}, 5000);
         // document.getElementById("myForm2").submit();
         </script>
     </section>

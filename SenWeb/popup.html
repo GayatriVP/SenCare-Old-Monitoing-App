@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SenCare- Homepage</title>
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/videogrid.css">
+</head>
+<body>
+    <header>
+        <div class="logo" id="logo">
+            <!-- Logo -->
+            <img src="./media/images/SenCare-removebg.png" alt="SenCare">
+        </div>
+        <div class="toggle-icon">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul class="items">
+                <li class="active"><a class="active" href="">Dashboard</a></li>
+                <li><a href="">Seniors</a></li>
+                <!-- <div class="clients">
+                    <ul class="cli-list">
+                        <li><a href="">C1</a></li>
+                        <li><a href="">C2</a></li>
+                        <li><a href="">C3</a></li>
+                        <li><a href="">C4</a></li>
+                        <li><a href="">C5</a></li>
+                    </ul>
+                </div> -->
+                <li><a href="">Profile</a></li>
+                <li><a href="">Alerts</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+
+    <div class="pop-container">
+        <div class="alert">
+            <button type="submit" onclick="openPopup()">Submit</button>
+            <div class="pop-up" id="popup">
+                <img src="./media/images/icon/notification.png" alt="">
+                <h2>Emergency Alert</h2>
+                <p>Received an alert. Visit Urgenetly.</p>
+                <button type="button" onclick="closePopup()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let popup = document.getElementById("popup");
+
+        function openPopup(){
+            popup.classList.add("openPopup")
+        }
+        function closePopup(){
+            popup.classList.remove("openPopup");
+        }
+    </script>
+</body>
+</html>

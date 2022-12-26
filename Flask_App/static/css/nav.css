@@ -12,7 +12,10 @@
     font-weight: 600;
     color: white;
     justify-content: space-between;
-    background: url('../media/images/Blue Crystals.jpg');
+    /* background: url('../media/images/Blue Crystals.jpg'); */
+    background: linear-gradient(
+      rgba(86, 87, 116, 0.485) 100%, rgba(54, 78, 148, 0.485) 100%
+    ),url('../media/images/Blue Crystals.jpg');
     /* background-size: cover; */
     background-repeat: repeat;
     z-index: -1;

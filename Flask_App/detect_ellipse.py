@@ -9,6 +9,7 @@ import math
 import cv2
 # import cvzone
 # from cvzone.SelfiSegmentationModule import SelfiSegmentation
+# from timeit import default_timer as timer
 
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 classes = model.names
@@ -18,16 +19,16 @@ count = 0
 # fgbg = cv2.createBackgroundSubtractorMOG2()
 
 
-# @jit(target_backend='cuda')
+# @jit
 def score_frame(frame):
     """
     Takes a single frame as input, and scores the frame using yolo5 model.
     :param frame: input frame in numpy/list/tuple format.
     :return: Labels and Coordinates of objects detected by model in the frame.
     """
-    # device = torch.device('cuda:0')
-    # model.to(device)
-    model.to("cpu")
+    device = torch.device('cuda:0')
+    model.to(device)
+    # model.to("cpu")
     # print("in score")
     frame = [frame]
     # print("in frame")
@@ -40,7 +41,7 @@ def score_frame(frame):
     return labels, cord
 
 
-# @jit(target_backend='cuda')
+# @jit
 def class_to_label(x):
     """
     For a given label value, return corresponding string label.
@@ -50,7 +51,7 @@ def class_to_label(x):
     return classes[int(x)]
 
 
-# @jit(target_backend='cuda')
+# @jit
 def plot_boxes(results, frame):
     """
     Takes a frame and its results as input, and plots the bounding boxes and label on to the frame.
@@ -114,9 +115,9 @@ def plot_boxes(results, frame):
     return frame
 
 
-# @jit(target_backend='cuda')
+@jit
 def predict(url):
-    # url1 = "Flask_App/videos/fall-01.mp4"
+    url1 = "Flask_App/videos/fall-01.mp4"
     # print("in predict")
     vs = cv2.VideoCapture(url)
     # print("capture")
@@ -141,5 +142,6 @@ def predict(url):
 
     vs.release()
 
-
+# start = timer()
 # predict()
+# print("with GPU:", timer()-start)   

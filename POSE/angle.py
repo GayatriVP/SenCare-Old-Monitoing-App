@@ -3,6 +3,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 import cv2
 import math as m
+import os
+from csv import writer
 
 
 def draw_keypoints(frame, keypoints, confidence_threshold):
@@ -30,7 +32,7 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
 
 
 # angles
-def tree_angle(frame, keypoints):
+def tree_angle(keypoints):
     # print("[", keypoints[0][0][5], ",",  keypoints[0][0][6],
     #       ",", keypoints[0][0][9], ",", keypoints[0][0][10])
     # print("HEllo")
@@ -50,7 +52,6 @@ def tree_angle(frame, keypoints):
     edg[6] = keypoints[0][0][10]
 
     # print("[", edg[5], ",", edg[6], ",", edg[9], ",", edg[10])
-
     angles = []
     for i in range(5, 13):
         # First coord
@@ -66,7 +67,8 @@ def tree_angle(frame, keypoints):
         if angle > 180.0:
             angle = 360-angle
         angles.append(angle)
-    print(angles)
+    # print(angles)
+    return angles
     # cv2.line(frame, (int(x1), int(y1)),
     #          (int(x2), int(y2)), (0, 0, 255), 2)
     # cv2.imshow('MoveNet Lightning', frame)
@@ -77,9 +79,9 @@ def tree_angle(frame, keypoints):
 interpreter = tf.lite.Interpreter(
     model_path='POSE/lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
-img2 = cv2.imread('POSE/DATASET/TRAIN/downdog/00000134.jpg')
-img = tf.image.resize_with_pad(np.expand_dims(img2, axis=0), 192, 192)
-input_image = tf.cast(img, dtype=tf.float32)
+# img2 = cv2.imread('POSE/DATASET/TRAIN/downdog/00000134.jpg')
+# img = tf.image.resize_with_pad(np.expand_dims(img2, axis=0), 192, 192)
+# input_image = tf.cast(img, dtype=tf.float32)
 # cv2.imshow('Image', img)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
@@ -110,21 +112,77 @@ input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
 # Make predictions
-interpreter.set_tensor(input_details[0]['index'], np.array(input_image))
-interpreter.invoke()
-keypoints_with_scores = interpreter.get_tensor(output_details[0]['index'])
+# interpreter.set_tensor(input_details[0]['index'], np.array(input_image))
+# interpreter.invoke()
+# keypoints_with_scores = interpreter.get_tensor(output_details[0]['index'])
 # print(keypoints_with_scores)
 # print(img.shape)
 
-frame = img2.copy()
-frame = cv2.resize(frame, (192, 192))
+# frame = img2.copy()
+# frame = cv2.resize(frame, (192, 192))
 
 # Rendering
-frame = img2.copy()
-frame = cv2.resize(frame, (192, 192))
-draw_connections(frame, keypoints_with_scores, EDGES, 0.0)
-draw_keypoints(frame, keypoints_with_scores, 0.0)
-tree_angle(frame, keypoints_with_scores)
-cv2.imshow('MoveNet Lightning', frame)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+# frame = img2.copy()
+# frame = cv2.resize(frame, (192, 192))
+# draw_connections(frame, keypoints_with_scores, EDGES, 0.0)
+# draw_keypoints(frame, keypoints_with_scores, 0.0)
+# tree_angle(frame, keypoints_with_scores)
+# cv2.imshow('MoveNet Lightning', frame)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+# directory = 'POSE/DATASET/TRAIN/tree'
+
+
+# with open('POSE/tree.csv', 'w', newline='') as f_object:
+#     # print("in open")
+#     for filename in os.scandir(directory):
+#         # print("in dir")
+#         if filename.is_file():
+#             # print(filename.path)
+#             img2 = cv2.imread(filename.path)
+#             img = tf.image.resize_with_pad(
+#                 np.expand_dims(img2, axis=0), 192, 192)
+#             input_image = tf.cast(img, dtype=tf.float32)
+
+#             interpreter.set_tensor(
+#                 input_details[0]['index'], np.array(input_image))
+#             interpreter.invoke()
+#             keypoints_with_scores = interpreter.get_tensor(
+#                 output_details[0]['index'])
+
+#             for a in range(len(keypoints_with_scores)):
+#                 # print("in a")
+#                 ke = keypoints_with_scores.copy()
+#                 ke = ke[0][0]
+#                 if ke[a][2] < 0.2:
+#                     np.delete(ke, a)
+#             if len(ke) == 17:
+#                 # print("in")
+#                 angles = tree_angle(keypoints_with_scores)
+
+#                 writer_object = writer(f_object)
+#                 writer_object.writerow(angles)
+# f_object.close()
+
+directory = 'POSE/compare/'
+
+
+for filename in os.scandir(directory):
+    #         # print("in dir")
+    if filename.is_file():
+        with open(filename.path) as file:
+            lines = file.readlines()
+            rows_of_numbers = [map(float, line.split(',')) for line in lines]
+            sums = map(sum, zip(*rows_of_numbers))
+            averages = [sum_item / len(lines) for sum_item in sums]
+            print(averages)
+            with open('POSE/pose_angles.csv', 'w', newline='') as f:
+                # print("in")
+                writer = writer(f)
+                fields = ['Tree', 'Goddess']
+                # print("before")
+                writer.writerow(fields)
+                # print("after")
+                for val in averages:
+                    writer.writerow([val])

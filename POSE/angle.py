@@ -4,7 +4,7 @@ from matplotlib import pyplot as plt
 import cv2
 import math as m
 import os
-from csv import writer
+from csv import DictReader, writer
 
 
 def draw_keypoints(frame, keypoints, confidence_threshold):
@@ -79,7 +79,7 @@ def tree_angle(keypoints):
 interpreter = tf.lite.Interpreter(
     model_path='POSE/lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
-# img2 = cv2.imread('POSE/DATASET/TRAIN/downdog/00000134.jpg')
+# img2 = cv2.imread('POSE/DATASET/TRAIN/goddess/00000000.jpg')
 # img = tf.image.resize_with_pad(np.expand_dims(img2, axis=0), 192, 192)
 # input_image = tf.cast(img, dtype=tf.float32)
 # cv2.imshow('Image', img)
@@ -126,15 +126,18 @@ output_details = interpreter.get_output_details()
 # frame = cv2.resize(frame, (192, 192))
 # draw_connections(frame, keypoints_with_scores, EDGES, 0.0)
 # draw_keypoints(frame, keypoints_with_scores, 0.0)
-# tree_angle(frame, keypoints_with_scores)
+# webs = tree_angle(keypoints_with_scores)
+# print(webs)
 # cv2.imshow('MoveNet Lightning', frame)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-# directory = 'POSE/DATASET/TRAIN/tree'
+
+# individual original pose angles
+# directory = 'POSE/DATASET/TRAIN/warrior2'
 
 
-# with open('POSE/tree.csv', 'w', newline='') as f_object:
+# with open('POSE/compare/warrior.csv', 'w', newline='') as f_object:
 #     # print("in open")
 #     for filename in os.scandir(directory):
 #         # print("in dir")
@@ -155,7 +158,7 @@ output_details = interpreter.get_output_details()
 #                 # print("in a")
 #                 ke = keypoints_with_scores.copy()
 #                 ke = ke[0][0]
-#                 if ke[a][2] < 0.2:
+#                 if ke[a][2] < 0.7:
 #                     np.delete(ke, a)
 #             if len(ke) == 17:
 #                 # print("in")
@@ -165,24 +168,110 @@ output_details = interpreter.get_output_details()
 #                 writer_object.writerow(angles)
 # f_object.close()
 
-directory = 'POSE/compare/'
+
+# all poses average angles
+# directory = 'POSE/compare/'
 
 
-for filename in os.scandir(directory):
+# for filename in os.scandir(directory):
+#     #         # print("in dir")
+#     if filename.is_file():
+#         with open(filename.path) as file:
+#             lines = file.readlines()
+#             rows_of_numbers = [map(float, line.split(',')) for line in lines]
+#             sums = map(sum, zip(*rows_of_numbers))
+#             averages = [sum_item / len(lines) for sum_item in sums]
+#             print(averages)
+#             with open('POSE/pose_angles.csv', 'a', newline='') as f:
+#                 # print("in")
+#                 writer1 = writer(f)
+#                 fields = ['Butterfly', 'Goddess', 'Tree', 'Warrior']
+#                 # print("before")
+#                 writer1.writerow(fields)
+#                 # print("after")
+#                 for val in averages:
+#                     writer1.writerow([val])
+
+
+# webcam keypoints
+cap = cv2.VideoCapture(0)
+while cap.isOpened():
+    ret, frame = cap.read()
+    img = frame.copy()
+    img = tf.image.resize_with_pad(np.expand_dims(img, axis=0), 192, 192)
+    input_image = tf.cast(img, dtype=tf.float32)
+
+    # Setup input and output
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
+    # Make predictions
+    interpreter.set_tensor(input_details[0]['index'], np.array(input_image))
+    interpreter.invoke()
+    keypoints_with_scores = interpreter.get_tensor(output_details[0]['index'])
+
+    # Rendering
+    draw_connections(frame, keypoints_with_scores, EDGES, 0.2)
+    draw_keypoints(frame, keypoints_with_scores, 0.2)
+    web_angles = []
+
+    for a in range(len(keypoints_with_scores)):
+        # print("in a")
+        ke = keypoints_with_scores.copy()
+        ke = ke[0][0]
+        if ke[a][2] < 0.2:
+            np.delete(ke, a)
+    if len(ke) == 17:
+        # print("in")
+        web_angles = tree_angle(keypoints_with_scores)
+        print(web_angles)
+
+    directory = 'POSE/pose_angles.csv'
+    pose_angles=[]
+
+    for filename in os.scandir(directory):
     #         # print("in dir")
-    if filename.is_file():
-        with open(filename.path) as file:
-            lines = file.readlines()
-            rows_of_numbers = [map(float, line.split(',')) for line in lines]
-            sums = map(sum, zip(*rows_of_numbers))
-            averages = [sum_item / len(lines) for sum_item in sums]
-            print(averages)
-            with open('POSE/pose_angles.csv', 'w', newline='') as f:
-                # print("in")
-                writer = writer(f)
-                fields = ['Tree', 'Goddess']
-                # print("before")
-                writer.writerow(fields)
-                # print("after")
-                for val in averages:
-                    writer.writerow([val])
+        if filename.is_file():
+            with open(filename.path) as file:
+                file = DictReader(filename.path)
+                for col in file:
+                    pose_angles.append(col['Tree'])
+
+    f=0
+    for z in range(17):
+        angle_diff = pose_angles[z]-web_angles[z]
+        if abs(angle_diff)>=15:
+            f=1
+            if angle_diff <0:
+                correction="clockwise"
+            else:
+                correction="anticlockwise"
+        else:
+            f=0
+            break;
+
+
+
+#pose-web
+#negative toh clockwise
+#positive toh anticlockwise
+#**********************************
+
+#make dictionary of angles
+#make dictionary of correction
+#process after 5-6 frames
+#output correction
+
+#first ceck for full body in camera by checking 17 keypoints
+#when len of keypoints is equal to 17 for 5 continuous frames only then calculate angles and start comparing
+
+    else:
+        print("keypoints not detected")
+
+    cv2.imshow('MoveNet Lightning', frame)
+
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()

@@ -40,12 +40,11 @@
     background-color: #f1f1f1;
   }
         </style>
-        
-        
+      
     </head>
     <body>
         <div>
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+            <input type="text" id="myInput"  placeholder="Search for names.." onkeyup="myFunction();">
             <table id="data" class="display" style="width:100%">
                 <thead>
                         <th>Sno</th>
@@ -68,7 +67,7 @@
                 </table>
                 
         </div>
-
+  
         <script>
             function myFunction() {
               // Declare variables
@@ -80,7 +79,7 @@
             
               // Loop through all table rows, and hide those who don't match the search query
               for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
+                td = tr[i].getElementsByTagName("td")[1];
                 if (td) {
                   txtValue = td.textContent || td.innerText;
                   if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -92,10 +91,7 @@
               }
             }
             </script>
-       
-       
-       
-            
+
         <script type="module">
             var stdNo = 0;
             var tbody = document.getElementById('tbody1');

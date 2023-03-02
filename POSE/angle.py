@@ -192,8 +192,19 @@ output_details = interpreter.get_output_details()
 #                 for val in averages:
 #                     writer1.writerow([val])
 
+# angle-dict
+dict_angles = {1: 'left forearm',
+               2: 'right forearm',
+               3: 'left arm',
+               4: 'right arm',
+               5: 'left thigh',
+               6: 'right thigh',
+               7: 'left shin',
+               8: 'right shin'}
 
+correction = {}
 # webcam keypoints
+url1 = "Flask_App/videos/fall-01.mp4"
 cap = cv2.VideoCapture(0)
 while cap.isOpened():
     ret, frame = cap.read()
@@ -214,59 +225,74 @@ while cap.isOpened():
     draw_connections(frame, keypoints_with_scores, EDGES, 0.2)
     draw_keypoints(frame, keypoints_with_scores, 0.2)
     web_angles = []
-
-    for a in range(len(keypoints_with_scores)):
-        # print("in a")
-        ke = keypoints_with_scores.copy()
-        ke = ke[0][0]
-        if ke[a][2] < 0.2:
-            np.delete(ke, a)
-    if len(ke) == 17:
-        # print("in")
+    ke = keypoints_with_scores.copy()
+    kz = ke[0][0]
+    # print(kz)
+    kx = []
+    for a in range(17):
+        # print("in a", kz[a][2])
+        # ke = ke[ke[a][2] < 0.6]
+        if kz[a][2] < 0.4:
+            # print("in if")
+            kx.append(a)
+    knew = np.delete(kz, kx, axis=0)
+    # kz.remove(a)
+    # print(len(knew))
+    if len(knew) == 17:
+        # print("YES")
+        # else:
+        #     print(knew)
+        #         # print("in")
         web_angles = tree_angle(keypoints_with_scores)
         print(web_angles)
 
-    directory = 'POSE/pose_angles.csv'
-    pose_angles=[]
+        filename = 'POSE/pose_angles.csv'
+        pose_angles = []
 
-    for filename in os.scandir(directory):
-    #         # print("in dir")
-        if filename.is_file():
-            with open(filename.path) as file:
-                file = DictReader(filename.path)
-                for col in file:
-                    pose_angles.append(col['Tree'])
+        with open(filename, 'r') as file:
+            filez = DictReader(file)
+            for col in filez:
+                pose_angles.append(col['Warrior'])
 
-    f=0
-    for z in range(17):
-        angle_diff = pose_angles[z]-web_angles[z]
-        if abs(angle_diff)>=15:
-            f=1
-            if angle_diff <0:
-                correction="clockwise"
+        f = 0
+        print(pose_angles)
+        for z in range(8):
+            j = float(pose_angles[z])
+            mn = float(web_angles[z])
+            # print("pose=", type(j),
+            #       " , web=", type(mn))
+
+            angle_diff = j-mn
+            # print(angle_diff)
+            if abs(angle_diff) >= 15:
+                f = 1
+                if angle_diff < 0:
+                    # print("clock")
+                    correction[z+1] = "clockwise"
+                else:
+                    correction[z+1] = "anticlockwise"
             else:
-                correction="anticlockwise"
-        else:
-            f=0
-            break;
+                f = 0
+                # break
+        print(correction)
 
 
+# # pose-web
+# # negative toh clockwise
+# # positive toh anticlockwise
+# # **********************************
 
-#pose-web
-#negative toh clockwise
-#positive toh anticlockwise
-#**********************************
+# # make dictionary of angles
+# # make dictionary of correction
+# # process after 5-6 frames
+# # output correction
 
-#make dictionary of angles
-#make dictionary of correction
-#process after 5-6 frames
-#output correction
-
-#first ceck for full body in camera by checking 17 keypoints
-#when len of keypoints is equal to 17 for 5 continuous frames only then calculate angles and start comparing
+# # first ceck for full body in camera by checking 17 keypoints
+# # when len of keypoints is equal to 17 for 5 continuous frames only then calculate angles and start comparing
 
     else:
-        print("keypoints not detected")
+        pass
+#         # print("keypoints not detected")
 
     cv2.imshow('MoveNet Lightning', frame)
 

@@ -125,3 +125,63 @@ print(webs)
 cv2.imshow('MoveNet Lightning', frame)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+
+# individual original pose angles
+# directory = 'POSE/DATASET/TRAIN/warrior2'
+
+
+# with open('POSE/compare/warrior.csv', 'w', newline='') as f_object:
+#     # print("in open")
+#     for filename in os.scandir(directory):
+#         # print("in dir")
+#         if filename.is_file():
+#             # print(filename.path)
+#             img2 = cv2.imread(filename.path)
+#             img = tf.image.resize_with_pad(
+#                 np.expand_dims(img2, axis=0), 192, 192)
+#             input_image = tf.cast(img, dtype=tf.float32)
+
+#             interpreter.set_tensor(
+#                 input_details[0]['index'], np.array(input_image))
+#             interpreter.invoke()
+#             keypoints_with_scores = interpreter.get_tensor(
+#                 output_details[0]['index'])
+
+#             for a in range(len(keypoints_with_scores)):
+#                 # print("in a")
+#                 ke = keypoints_with_scores.copy()
+#                 ke = ke[0][0]
+#                 if ke[a][2] < 0.7:
+#                     np.delete(ke, a)
+#             if len(ke) == 17:
+#                 # print("in")
+#                 angles = tree_angle(keypoints_with_scores)
+
+#                 writer_object = writer(f_object)
+#                 writer_object.writerow(angles)
+# f_object.close()
+
+
+# all poses average angles
+# directory = 'POSE/compare/'
+
+
+# for filename in os.scandir(directory):
+#     #         # print("in dir")
+#     if filename.is_file():
+#         with open(filename.path) as file:
+#             lines = file.readlines()
+#             rows_of_numbers = [map(float, line.split(',')) for line in lines]
+#             sums = map(sum, zip(*rows_of_numbers))
+#             averages = [sum_item / len(lines) for sum_item in sums]
+#             print(averages)
+#             with open('POSE/pose_angles.csv', 'a', newline='') as f:
+#                 # print("in")
+#                 writer1 = writer(f)
+#                 fields = ['Butterfly', 'Goddess', 'Tree', 'Warrior']
+#                 # print("before")
+#                 writer1.writerow(fields)
+#                 # print("after")
+#                 for val in averages:
+#                     writer1.writerow([val])

@@ -33,9 +33,7 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
 
 # angles
 def tree_angle(keypoints):
-    # print("[", keypoints[0][0][5], ",",  keypoints[0][0][6],
-    #       ",", keypoints[0][0][9], ",", keypoints[0][0][10])
-    # print("HEllo")
+
     edg = keypoints[0][0].copy()
     # print(edg)
     # print(len(edg))
@@ -69,22 +67,11 @@ def tree_angle(keypoints):
         angles.append(angle)
     # print(angles)
     return angles
-    # cv2.line(frame, (int(x1), int(y1)),
-    #          (int(x2), int(y2)), (0, 0, 255), 2)
-    # cv2.imshow('MoveNet Lightning', frame)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
 
 
 interpreter = tf.lite.Interpreter(
     model_path='POSE/lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
-# img2 = cv2.imread('POSE/DATASET/TRAIN/goddess/00000000.jpg')
-# img = tf.image.resize_with_pad(np.expand_dims(img2, axis=0), 192, 192)
-# input_image = tf.cast(img, dtype=tf.float32)
-# cv2.imshow('Image', img)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
 
 EDGES = {
     (0, 1): 'm',
@@ -110,87 +97,6 @@ EDGES = {
 # Setup input and output
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
-
-# Make predictions
-# interpreter.set_tensor(input_details[0]['index'], np.array(input_image))
-# interpreter.invoke()
-# keypoints_with_scores = interpreter.get_tensor(output_details[0]['index'])
-# print(keypoints_with_scores)
-# print(img.shape)
-
-# frame = img2.copy()
-# frame = cv2.resize(frame, (192, 192))
-
-# Rendering
-# frame = img2.copy()
-# frame = cv2.resize(frame, (192, 192))
-# draw_connections(frame, keypoints_with_scores, EDGES, 0.0)
-# draw_keypoints(frame, keypoints_with_scores, 0.0)
-# webs = tree_angle(keypoints_with_scores)
-# print(webs)
-# cv2.imshow('MoveNet Lightning', frame)
-# cv2.waitKey(0)
-# cv2.destroyAllWindows()
-
-
-# individual original pose angles
-# directory = 'POSE/DATASET/TRAIN/warrior2'
-
-
-# with open('POSE/compare/warrior.csv', 'w', newline='') as f_object:
-#     # print("in open")
-#     for filename in os.scandir(directory):
-#         # print("in dir")
-#         if filename.is_file():
-#             # print(filename.path)
-#             img2 = cv2.imread(filename.path)
-#             img = tf.image.resize_with_pad(
-#                 np.expand_dims(img2, axis=0), 192, 192)
-#             input_image = tf.cast(img, dtype=tf.float32)
-
-#             interpreter.set_tensor(
-#                 input_details[0]['index'], np.array(input_image))
-#             interpreter.invoke()
-#             keypoints_with_scores = interpreter.get_tensor(
-#                 output_details[0]['index'])
-
-#             for a in range(len(keypoints_with_scores)):
-#                 # print("in a")
-#                 ke = keypoints_with_scores.copy()
-#                 ke = ke[0][0]
-#                 if ke[a][2] < 0.7:
-#                     np.delete(ke, a)
-#             if len(ke) == 17:
-#                 # print("in")
-#                 angles = tree_angle(keypoints_with_scores)
-
-#                 writer_object = writer(f_object)
-#                 writer_object.writerow(angles)
-# f_object.close()
-
-
-# all poses average angles
-# directory = 'POSE/compare/'
-
-
-# for filename in os.scandir(directory):
-#     #         # print("in dir")
-#     if filename.is_file():
-#         with open(filename.path) as file:
-#             lines = file.readlines()
-#             rows_of_numbers = [map(float, line.split(',')) for line in lines]
-#             sums = map(sum, zip(*rows_of_numbers))
-#             averages = [sum_item / len(lines) for sum_item in sums]
-#             print(averages)
-#             with open('POSE/pose_angles.csv', 'a', newline='') as f:
-#                 # print("in")
-#                 writer1 = writer(f)
-#                 fields = ['Butterfly', 'Goddess', 'Tree', 'Warrior']
-#                 # print("before")
-#                 writer1.writerow(fields)
-#                 # print("after")
-#                 for val in averages:
-#                     writer1.writerow([val])
 
 # angle-dict
 dict_angles = {1: 'left forearm',
@@ -284,25 +190,6 @@ while cap.isOpened():
             else:
                 print("Pose done Correctly")
 
-    # # pose-web
-    # # negative toh clockwise
-    # # positive toh anticlockwise
-
-    # # make dictionary of angles
-    # # make dictionary of correction
-    # # output correction
-
-    # # first ceck for full body in camera by checking 17 keypoints
-    # # **********************************
-
-    # # process after 10 frames
-    # # for each correction, pick only maximum angle diff and give output
-    # '''correction algo:
-    # make angle diff array
-    # pick max of angle_diff
-    # compare to average range of pose
-    # give correction
-    # '''
         else:
             pass
     #         # print("keypoints not detected")
@@ -315,3 +202,23 @@ while cap.isOpened():
 
 cap.release()
 cv2.destroyAllWindows()
+
+# # pose-web
+# # negative toh clockwise
+# # positive toh anticlockwise
+
+# # make dictionary of angles
+# # make dictionary of correction
+# # output correction
+
+# # first ceck for full body in camera by checking 17 keypoints
+# # **********************************
+
+# # process after 10 frames
+# # for each correction, pick only maximum angle diff and give output
+# '''correction algo:
+# make angle diff array
+# pick max of angle_diff
+# compare to average range of pose
+# give correction
+# '''

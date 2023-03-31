@@ -1,0 +1,118 @@
+body{
+    height: 100vh !important;
+    /* max-height: 100vh; */
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(
+        rgba(150, 44, 44, 0.685) 70%, rgba(99, 104, 116, 0.785) 100%
+    ),url(../media/images/b32.jpg);
+    backdrop-filter: blur(0px);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.block{
+    padding: 1% 12%;
+    /* padding-bottom: 5%; */
+    /* padding: 5% 15%; */
+    justify-content: center;
+    align-items: center;
+    height: 72vh;
+    /* width: 980px; */
+
+}
+.left{
+    width: 40%;
+    height: 100%;
+    /* background-color: blueviolet; */
+    /* width: 170px; */
+    float: left;
+    margin-bottom: 2%;
+    background-color: rgba(224, 125, 125, 0.555);
+    background: linear-gradient(
+        rgba(165, 127, 127, 0.185) 100%, rgba(99, 104, 116, 0.385) 100%
+    ),url('../media/images/illust/View\ _Hands\ Of\ Senior\ Man\ Playing\ Music\ On\ Piano_\ by\ Stocksy\ Contributor\ _Raymond\ Forbes\ LLC_.png') no-repeat;
+    backdrop-filter: blur(3px);
+    background-position: center;
+    background-size: cover;
+    object-fit: cover;
+    object-position: 10% 10%;
+}
+/* .left{
+    width: 50%;
+    height: 100%;
+    background-color: brown;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    animation: image 7s infinite ease ;
+    
+}
+@keyframes image {
+    20% {
+      background: url('../media/images/e2.png') no-repeat;
+    }
+    50%{
+        background: url('../media/images/e5.png') no-repeat;
+    }
+    80% {
+      background: url('../media/images/e3.png') no-repeat;
+    }
+  } */
+
+/* .left img{
+    height: 300px;
+    width: 300px;
+    margin-top: 15%;
+    align-items: center;
+    padding: 3%;
+} */
+
+.right{
+    width: 60%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.569);
+    /* width: 240px; */
+    float: right;
+    margin-bottom: 2%;
+    /* display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% auto;
+    justify-content: space-around; */
+    /* grid-gap: 10px; */
+    /* grid-auto-flow: row; */
+    /* padding: 10px; */
+    display: flex;
+    flex-direction: column;
+}
+.right > div{
+    height: 100%;
+    width: 100%;
+    color: rgb(193, 153, 153);
+    /* justify-content: center; */
+    /* background-color: aqua; */
+}
+.right .one, .two, .three, .four{
+    text-align: center;
+    font-size: 50px;
+    padding-top: 15%;
+    transition: 0.5s;
+}
+.one a:hover, .two a:hover{
+    letter-spacing: 5px;
+}
+.right a{
+    cursor: pointer;
+    color: white;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: 1px underline white;
+    text-underline-offset: 5px;
+}
+
+/* .one, .three{
+    border-right: 2px wheat solid;
+} */

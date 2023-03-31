@@ -1,0 +1,66 @@
+h1{
+    padding: 2% 5%;
+    font-size: 2em;
+}
+.grid-container {
+    display: grid;
+    grid-gap: 5%;
+    row-gap: 55px;
+    padding: 1% 7%;
+    grid-template-columns: 50% auto;
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    grid-template-rows: 350px 350px 350px;
+}
+.grid-container > div{
+    border:2px solid #1b2361e2;
+    z-index: 1;
+}
+.vid{
+    height:250px;
+}
+video{
+    max-height: 349px;
+    width: 100%;
+    border-radius: 13px ;
+}
+.desc{
+    height: 50px;
+    z-index: 1;
+    padding: 0% 5%;
+    padding-top: 7%;
+    color: white;
+    font-size: large;
+    font-weight: 600;
+    text-align: center;
+    text-shadow: 1px 1px 2px black, 0 0 5px blue,0 0 5px darkblue;
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* .btn{
+    margin-left: 20px;
+    padding: 10px;
+    border-radius: 5px 12px;
+    text-transform: capitalize;
+    background-color: white;
+    color: black;
+} */
+
+/* .grid-container{
+    padding: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 30px;
+    text-align: center;
+}
+
+.flex-left, .flex-right{
+    flex: 50% 50%;
+    height: 250px;
+    width: 250px;
+    margin: 10px;
+    border: 2px solid black;
+} */

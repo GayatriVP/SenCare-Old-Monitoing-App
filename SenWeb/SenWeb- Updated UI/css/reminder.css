@@ -1,0 +1,73 @@
+/* https://codepen.io/twhite96/embed/oRRjPP?height=600&default-tab=result&embed-version=2#css-box */
+/* https://www.w3schools.com/howto/howto_js_read_more.asp */
+body{
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+}
+.left{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 10%;
+    border-right: 7px solid rgb(212, 104, 104);
+    background: linear-gradient(
+        rgba(215, 104, 104, 0.685) 70%, rgba(97, 104, 120, 0.785) 100%
+    ),url('../media/images/b21.jpg');
+    backdrop-filter: blur(30px);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.left>div{
+    text-align: center;
+    /* margin: 10% 1%; */
+    padding: 45px 0px;
+    /* padding-top: 10px; */
+    vertical-align: middle;
+    /* border-bottom: 1px solid black; */
+    /* height: 18vh; */
+    font-size: xx-large;
+    color: rgb(250, 248, 228);
+    font-weight: bolder;
+}
+.left .three{
+    padding-top: 70px;
+    text-shadow: 1px 1px 2px rgb(158, 149, 149), 0 0 25px rgb(96, 38, 48), 0 2px 5px rgb(139, 0, 25);
+}
+.right{
+    height: 100vh;
+    width: 90%;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.485) 100%, rgba(120, 152, 150, 0.785) 100%
+    );
+    backdrop-filter: blur(50px);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.right table{
+    border-collapse: collapse;
+    border: 1px solid #717171;
+}
+tr, td{
+    text-align: center;
+    border: 1px solid #717171;
+}
+td, th{
+    height: 40px;
+    width: 70px;
+    padding: 25px 3px;
+    text-transform: capitalize;
+}
+th{
+    font-size: medium;
+    font-weight: 800;
+}
+/* td button{
+    content: "";
+} */
+/* td:hover{
+    content: "add";
+} */

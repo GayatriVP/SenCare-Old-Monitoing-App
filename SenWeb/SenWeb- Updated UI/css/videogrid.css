@@ -1,0 +1,110 @@
+body{
+    margin: 0;
+    padding: 0;
+    max-height: 500vh;
+    background: linear-gradient(
+        rgba(167, 73, 73, 0.725) 70%, rgba(97, 104, 120, 0.785) 100%
+    ),url('../media/images/b4.jpg');
+    backdrop-filter: blur(0px);
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.videofeed{
+    /* background: linear-gradient(
+        45deg,rgba(245, 245, 220), rgba(245, 245, 220)
+    ); */
+    /* background-size: cover;
+    background-position: center; */
+    margin: 5%;
+    margin-top: 0;
+    min-height: 100vh;
+    /* justify-content: space-around; */
+    /* padding-bottom: 5%; */
+}
+h1{
+    font-size: 45px;
+    color: rgb(232, 228, 228);
+}
+/* .grid-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+}
+.feed{
+    height: 500px;
+    width:450px;
+    border-radius: 15px;
+    margin: 0% 5%;
+}
+.vid{
+    height: 450px;
+    position: absolute;
+    border-radius: 15px;
+} */
+
+.grid-container {
+    display: grid;
+    grid-gap: 15px;
+    /* padding-left: 7%; */
+    /* row-gap: 55px; */
+    /* padding: 1% 7%; */
+    /* grid-template-columns: 50% auto; */
+    grid-template-columns: auto auto;
+    grid-template-rows: 625px 625px auto;
+}
+.grid-container > div{
+    /* border:2px solid #1b2361e2; */
+    z-index: 1;
+}
+.feed{
+    background-color: rgba(0, 0, 0, 0.740);
+    box-shadow: 0 35px 45px rgb(0, 0, 0, 0.15);
+    border-radius: 15px;
+    height: 550px;
+    width: 625px;
+}
+.vid{
+    width: 620px;
+}
+video{
+    max-height: 500px;
+    width: 100%;
+    border-radius: 20px;
+    border: 3px solid black;
+} 
+.desc{
+    height: 50px;
+    z-index: 2;
+    color: white;
+    font-size: large;
+    font-weight: 600;
+    text-align: center;
+    /* text-shadow: 1px 1px 2px black, 0 0 5px rgba(225, 0, 0, 0.703),0 0 5px rgba(139, 0, 0, 0.626); */
+}
+.row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+@media screen and (max-width: 910px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        grid-template-rows: repeat(auto-fit,minmax(500px,1fr));
+    }
+    .feed{
+        height: 450px;
+        width: 430px;
+    }
+    .vid{
+        width: 430px;
+    }
+    video{
+        max-height: 450px;
+        width: 100%;
+        border-radius: 20px;
+        border: 3px solid black;
+    } 
+}

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SenCare- Homepage</title>
+    <link rel="stylesheet" href="../static/css/navigation0.css">
+    <link rel="stylesheet" href="../static/css/videogrid.css">
+    <link rel="stylesheet" href="../static/css/home.css">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <!-- <p class="text">< ?php echo $_SESSION['name'];?></p> -->
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="landing.php" class="active">Dashboard</a>
+        <a href="senior-application.php">Add Senior</a>
+        <!-- <a href="#">Profile</a> -->
+        <a href="logout.php">Logout</a>
+        <!-- <a href="alert.html">Alerts</a> -->
+    </div>
+    <div id="main">
+        <div class="nav">
+            <button class="openbtn" onclick="openNav()">☰</button> 
+            <div class="logo" id="logo">
+                <!-- Logo -->
+                <a href=""><img src="../static/media/images/SenCare-removebg.png" alt="SenCare"></a>
+            </div>
+        </div>
+        
+    
+
+        <section class="videofeed">
+            <h1>Monitors</h1>
+            <div class="grid-container">
+                <div class="flex-left feed" id="f1">
+                    <div class="vid">
+                        <!-- <script> document.myForm.submit()</script> -->
+                        <video autoplay loop muted id="vid1">
+                            <source src="../static/media/videos/merge02.mp4" type="video/mp4">
+                        </video>
+                        <script>document.getElementById("vid1").playbackRate = 0.15;</script>
+                    </div>
+                    <!-- <form name="myForm1" id="myForm1" method="GET" action="http://127.0.0.1:5000/predict">
+                        <input type="hidden" name="Query" value="static/media/videos/fall-01.mp4" />
+                    </form> -->
+                    <div class="desc">
+                        <div class="row">
+                            <h3>Name:</h3>
+                            <p>Aryaan</p>
+                        <!-- </div>
+                        <div class="row" style="padding-top: 20px;"> -->
+                            <p>Cam 1</p>
+                            <!-- <div class="btn">more</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-right feed" id="f2">
+                    <div class="vid">
+                        <video autoplay loop muted id="vid2">
+                            <source src="../static/media/videos/merge01.mp4" type="video/mp4">
+                        </video>
+                        <script>document.getElementById("vid2").playbackRate = 0.19;</script>
+                    </div>
+                    <!-- <form name="myForm4" id="myForm4" method="GET" action="http://127.0.0.1:5000/predict">
+                        <input type="hidden" name="Query" value="static/media/videos/fall-04.mp4" />
+                    </form> -->
+                    <div class="desc">
+                        <div class="row">
+                            <h3>Name:</h3>
+                            <p>Kiran</p>
+                        <!-- </div>
+                        <div class="row" style="padding-top: 20px;"> -->
+                            <p>Cam 1</p>
+                            <!-- <div class="btn">more</div> -->
+                        </div>
+                    </div>
+                </div>
+                <form name="myForm" id="myForm" method="GET" action="http://127.0.0.1:5000/predict">
+                    <input type="hidden" name="Query1" id="Query1"/>
+                    <input type="hidden" name="Query2" id="Query2"/>
+                </form>
+            </div>
+            <script> 
+            
+            res1 = '{{ res1 }}'
+            res2 = '{{ res2 }}'
+            flag1 = '{{ flag1 }}'
+            flag2 = '{{ flag2 }}'
+            setTimeout(() => { if(res1 == 'detected' && flag1 =='display'){}
+            else if (res1 == 'detected' && flag1=='None')
+            {
+                setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/decide"; }, 5000);
+                
+            }
+            else{
+                document.getElementById("Query1").value="static/media/videos/fall-01.mp4";
+                 document.getElementById("myForm").submit(); 
+            }}, 5000);
+    
+            setTimeout(() => {if(res2 == 'detected2' && flag2 =='display'){}
+            else if (res2 == 'detected2' && flag2=='None')
+            {
+                setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/decide"; }, 5000);
+                
+            }
+            else{
+                console.log("not yet detetcted 2")
+                document.getElementById("Query2").value="static/media/videos/fall-02.mp4";
+                
+                 document.getElementById("myForm").submit(); 
+            }}, 5000);
+            // document.getElementById("myForm2").submit();
+            </script>
+        </section>
+    
+</div>
+
+<script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "350px";
+      document.getElementById("main").style.marginLeft = "350px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+    </script>
+    
+    <script>
+        toggleIcon = document.querySelector(".toggle-icon");
+        toggleIcon.onclick = function(){
+            navBar = document.querySelector(".nav-bar");
+	        navBar.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

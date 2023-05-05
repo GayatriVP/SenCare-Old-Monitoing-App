@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SenCare- Homepage</title>
+    <link rel="stylesheet" href="../static/css/navigation0.css">
+    <link rel="stylesheet" href="../static/css/videogrid.css">
+    <link rel="stylesheet" href="../static/css/home.css">
+</head>
+<body>
+    <div id="mySidebar" class="sidebar">
+        <!-- <p class="text">< ?php echo $_SESSION['name'];?></p> -->
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="landing.php" class="active">Dashboard</a>
+        <a href="senior-application.php">Add Senior</a>
+        <!-- <a href="#">Profile</a> -->
+        <a href="logout.php">Logout</a>
+        <!-- <a href="alert.html">Alerts</a> -->
+    </div>
+    <header>
+        <div id="main">
+
+            <div class="nav">
+                <button class="openbtn" onclick="openNav()">☰</button> 
+                <div class="logo" id="logo">
+                    <!-- Logo -->
+                    <a href=""><img src="../static/media/images/SenCare-removebg.png" alt="SenCare"></a>
+                </div>
+            </div>
+        </div>    
+    </header>
+    
+    <div class="pop-container">
+        <div class="alert">
+            <!-- <button type="submit" onclick="openPopup()">Submit</button> -->
+            <div class="pop-up" id="popup">
+                <img src="../static/media/images/icon/notification.png" alt="">
+                <h2>Emergency Alert</h2>
+                <p>Received an alert. Visit Urgenetly.</p> 
+                <p id="frame"></p>
+                <button type="button" onclick="closePopup()">OK</button>
+            </div>
+        </div>
+    </div>
+<audio id="xyz" src="../static/media/mixkit-vintage-warning-alarm-990.wav" preload="auto"></audio>
+<audio id="xyz2" src="../static/media/mixkit-vintage-warning-alarm-990.wav" preload="auto"></audio>
+
+<script>
+    var sound1 = new Audio('../static/media/mixkit-vintage-warning-alarm-990.wav')
+    var sound2 = new Audio('../static/media/mixkit-vintage-warning-alarm-990.wav')
+	
+    res1 = '{{ res1 }}'
+    res2 = '{{ res2 }}'
+    let popup = document.getElementById("popup");
+    function openPopup(){
+            popup.classList.add("openPopup")
+        }
+    function closePopup(){
+            popup.classList.remove("openPopup");
+        }
+
+    if (res2 == 'detected2' && res1=='detected') 
+    {
+        sound2.play();
+	//document.getElementById("popup").style.display = 'block';
+        // alert("Fall detected in frame 2");
+        document.getElementById("frame").innerHTML = "Frame 2"
+        openPopup();
+        setTimeout(() => { window.location.href = "http://127.0.0.1:5000/home?flag2=display&flag1=display"; },5000);
+    }  
+    else if (res1 == 'detected')
+    {
+        sound2.play();
+        // alert("Fall detected in frame 1");
+        // demo();
+        document.getElementById("frame").innerHTML = "Frame 1"
+        openPopup();
+        setTimeout(() => {  window.location.href = "http://127.0.0.1:5000/home?flag1=display"; }, 12000);
+        // window.location.href = "http://127.0.0.1:5000/home?flag1=display";
+    }
+    else if (res2 == 'detected2') 
+    {
+        sound2.play();
+        // alert("Fall detected in frame 2");
+        document.getElementById("frame").innerHTML = "Frame 2"
+        openPopup();
+        window.location.href = "http://127.0.0.1:5000/home?flag2=display";
+    } 
+    else{
+
+    }   
+    
+
+    function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function demo() {
+        await sleep(10000);
+    }
+
+
+</script>
+
+<script src="../static/scripts/navigation.js"></script>
+</body>
+</html>
